@@ -6,6 +6,7 @@ import Error from "@/pages/Error.vue"
 
 import {createRouter, createWebHistory} from "vue-router";
 import Profile from "@/pages/Profile.vue";
+import Health from "@/pages/Health.vue";
 
 const routes = [
     {path: '/', component: Home},
@@ -14,7 +15,16 @@ const routes = [
     {path: '/error', component: Error},
     {path: '/signup/social-post', component: SocialSignupPage},
     {path: '/profile', component: Profile},
-    {path: '/oauth2/redirect/signup', redirect: "/signup/social-post"},
+    {path: '/health', component: Health},
+    {
+        path: '/oauth2/redirect/signup', redirect: to => {
+            if (to.query.error) {
+                return "/error"
+            } else {
+                return "/signup/social-post"
+            }
+        }
+    },
     {
         path: '/oauth2/redirect/login', redirect: to => {
             if (to.query.error) {
